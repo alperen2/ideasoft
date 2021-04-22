@@ -1,5 +1,29 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
+<h1>Products</h1> 
 
-{% block content %}
-    <h1>Products</h1>
+{% for flashMessage in app.session.flashbag.get('message') %}
+
+    {{ flashMessage }}
+
+{% endfor %}
+<div class="products">
+  {% for product in products %}
+  <div class="product">
+    <h4>{{product.title}}</h4>
+    <img
+      src="{{product.image}}"
+      alt="{{product.title}}"
+      style="width: 100px;"
+    />
+    <b class="price">{{product.price}} ₺</b>
+    <form action="{{ path('cart_add', {product_id: product.id}) }}", method="post">
+      <button class="btn_add">Sepete Ekle</button> <br>
+      <input type="number" placeholder="adet" name="quantity" value="1" class="quantity">
+    </form>
+  </div>
+  {% else %}
+  <h1>Mağazamızdaki tüm ürünler tükenmiştir...</h1>
+  {% endfor %}
+</div>
 {% endblock %}
+

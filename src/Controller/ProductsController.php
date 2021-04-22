@@ -2,26 +2,28 @@
 
 namespace App\Controller;
 
+use App\Helpers\CartManager;
+use App\Helpers\Helper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Asset\Package;
-use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 
 class ProductsController extends AbstractController
 {
     /**
      * @Route("/", name="products")
      */
-    public function index(): Response
+    public function index(SessionInterface $session): Response
     {
- 
-        $package = new Package(new EmptyVersionStrategy());
-        $json_file = $package->getUrl('products.json');
-        $json_data = file_get_contents($json_file);
+        $cartManager = new CartManager($session);
+        $helper = new Helper($session);
 
+        $products = Helper::getProduct();
+ 
         return $this->render('products/index.html', [
-            'products' => json_decode($json_data, true),
+            'products' => $products,
+            'cart_count' => $cartManager->cartCount(),
         ]);
     }
 }

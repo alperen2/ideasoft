@@ -1,0 +1,59 @@
+{% extends "base.html" %} {% block content %}
+<h1>Cart</h1> <a href="/cart/empty">Sepeti boşalt</a>
+
+{% for flashMessage in app.session.flashbag.get('message') %}
+
+    {{ flashMessage }}
+
+{% endfor %}
+<div class="cart" style="float:left">
+  {% for c in cart %}
+  <div class="product">
+    <h4>{{c.title}}</h4>
+    <img
+      src="{{c.image}}"
+      alt="{{c.title}}"
+      style="width: 100px;"
+    />
+    <b class="price">{{c.price}} ₺</b>
+    <form action="{{ path('cart_update', {product_id: c.id}) }}", method="post" class="updateCart">
+      adet: <input type="number" placeholder="adet" name="quantity" value="{{c.quantity}}" class="quantity">
+    </form>
+  </div>
+  {% else %}
+  <h1>Henüz sepete ürün eklemediniz</h1>
+  {% endfor %}
+</div>
+<div class="cart_detail" style="float:right">
+  <table>
+    <tr>
+      <td>Sepet Tutarı</td>
+      <td>{{total|number_format(2)}} ₺</td>
+    </tr>
+    <tr>
+      <td>Toplam vergi</td>
+      <td>{{tax|number_format(2)}} ₺</td>
+    </tr>
+    <tr>
+      <td>Kargo ücreti</td>
+      <td>{{shipCost|number_format(2)}} ₺</td>
+    </tr>
+    <tr>
+    <td>
+      <form>
+        <input type="text" name="code">
+        <button>uygula</button>
+      </form>
+    </td>
+    </tr>
+     <tr>
+      <td>İndirim</td>
+      <td>{{discount|number_format(2)}} ₺</td>
+    </tr>
+    <tr>
+    <td>Ödenecek Tutar</td>
+    <td>{{paymentAmount}}</td>
+    </tr>
+  </table>
+</div>
+{% endblock %}

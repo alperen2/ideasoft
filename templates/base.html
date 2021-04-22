@@ -1,15 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>STORE</title>
-    <link rel="stylesheet" href="{{asset('style.css')}}">
-</head>
-<body>
-    {% block content %}
-    {% endblock %}
+    <link rel="stylesheet" href="{{asset('css/style.css')}}" />
+    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}" />
+  </head>
+  <body>
+    <div class="container">
+      <header style="margin:20px 0">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">STORE</a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    aria-current="page"
+                    href="{{path('products')}}"
+                  >
+                    Products
+                  </a>
+                </li>
+              </ul>
+              <div class="d-flex">
+                <a href="{{path('cart')}}" class="btn btn-warning">
+                  Sepetim [{{cart_count}}]
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+      {% block content %} {% endblock %}
 
-    <script src="{{asset('script.js')}}"></script>
-</body>
+      <script src="{{asset('js/bootstrap.js')}}"></script>
+      <script src="{{asset('js/jquery.js')}}"></script>
+      <script src="{{asset('js/script.js')}}"></script>
+    </div>
+  </body>
 </html>
